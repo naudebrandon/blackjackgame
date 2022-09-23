@@ -1,16 +1,37 @@
+//Declare Object
+let player = {
+    name: "Brandon",
+    chips: 250,
+    /*sayHello: function(){
+        console.log("Hello")
+    }*/
+}
+
+//Call a function in an object
+//--> player.sayHello()
+
+//Declare Array
 let cards = []
+
+//Variable
 let sum = 0;
 let hasBlackJack = false
 let isAlive = false
 let message = ""
+
+//Set elements to variables
 let messageEl = document.getElementById("message-el");
 //let sumEl = document.getElementById("sum-el");
 let sumEl = document.querySelector(".sum-el");
 let cardsEl = document.querySelector(".cards-el");
+let playerEl = document.getElementById("player-el");
 
+playerEl.textContent = player.name  + ":" +" $" + player.chips;
+
+//Generate a random number from 1 to 13
 function getRandomcard()
 {
-    let drawCard = Math.floor(Math.random()*13) + 1;
+    let drawCard = Math.floor(Math.random()*13) + 1;//Floor to the nearest integer
 
     if(drawCard > 10)
     {
@@ -47,12 +68,15 @@ function renderGame(){
 }
 
 function newCard(){
-    let card = getRandomcard();
-    console.log("Draw new card");
-    sum += card;
-    cards.push(card);//Add to the end of the array
-    //cards.pop(card); Remove last item in an array
-    renderGame();
+    if(isAlive === true && hasBlackJack === false)
+    {
+        let card = getRandomcard();
+        console.log("Draw new card");
+        sum += card;
+        cards.push(card);//Add to the end of the array
+        //cards.pop(card); Remove last item in an array
+        renderGame();
+    }
 }
 
 function startGame(){
