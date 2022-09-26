@@ -1,5 +1,7 @@
 # coc6c4cbdabbd137c048113eb
 
+My adaption from the Scrimba project idea.
+
 ## About Scrimba
 
 At Scrimba our goal is to create the best possible coding school at the cost of a gym membership! 💜
