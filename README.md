@@ -1,6 +1,6 @@
 # coc6c4cbdabbd137c048113eb
 
-My adaption from the Scrimba project idea.
+A project from Scrimba, with my personal additions & contributions.  
 
 ## About Scrimba
 
