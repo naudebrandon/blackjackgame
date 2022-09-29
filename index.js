@@ -15,8 +15,11 @@ let cards = []
 
 //Variable
 let sum = 0;
+let dealerSum = 0;
 let hasBlackJack = false
 let isAlive = false
+let dealerAlive = true;
+let start_Game = true;
 let message = ""
 
 //Set elements to variables
@@ -57,17 +60,22 @@ function renderGame(){
 
     if (sum <= 20) {
         message = "Do you want to draw a new card?"
+    } else if(dealerSum === 21){
+        message = "Dealer got Blackjack!"
+        hasBlackJack = true
     } else if (sum === 21) {
         message = "You've got Blackjack!"
         hasBlackJack = true
+        player.chips += 30;
     } else {
-        message = "You're out of the game!"
+        message = "You're out of the game!, Dealer wins"
         isAlive = false
     }
     messageEl.textContent = message;
 }
 
 function newCard(){
+
     if(isAlive === true && hasBlackJack === false)
     {
         let card = getRandomcard();
@@ -80,11 +88,71 @@ function newCard(){
 }
 
 function startGame(){
-    isAlive = true;
-    firstCard = getRandomcard();
-    secondCard = getRandomcard();
-    cards = [firstCard, secondCard]
-    sum = firstCard + secondCard
-    
-    renderGame();
+
+    if(player.chips < 10)
+    {
+        start_Game == false;
+        messageEl.textContent = "Not enough chips, please refresh the page";
+    }
+    else
+    {
+        dealerSum = 0;
+        isAlive = true;
+        firstCard = getRandomcard();
+        secondCard = getRandomcard();
+        cards = [firstCard, secondCard]
+        sum = firstCard + secondCard
+        //Deduct buy in 
+        player.chips -= 10;
+        playerEl.textContent = player.name  + ":" +" $" + player.chips;
+        renderGame();
+    }
+}
+
+function dealerDraw(){
+
+    while(dealerAlive)
+    {
+        if (dealerSum < 16) {
+            //Draw aonther card
+            dealerNewCard();
+        } 
+        else {
+            dealerAlive = false;
+        }
+    }
+
+    winner();
+}
+
+function dealerNewCard(){
+
+        let card = getRandomcard();
+        console.log("Draw new card");
+        dealerSum += card;
+}
+
+function winner(){
+    if(sum > dealerSum || dealerAlive === false)
+    {
+        //player wins
+        messageEl.textContent = "Player wins" + "dealer has: " + dealerSum;
+        player.chips += 20;
+    }
+    if(sum === dealerSum)
+    {
+        //Tie
+        messageEl.textContent = "It's a draw" + "dealer has: " + dealerSum;
+        player.chips += 10;
+    }
+    else
+    {
+        //Dealer Wins
+        messageEl.textContent = "Dealer Wins," + "dealer has: " + dealerSum;
+    }
+}
+
+function stand(){
+    isAlive = false;
+    dealerDraw();
 }
