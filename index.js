@@ -100,6 +100,7 @@ function startGame(){
     {
         dealerSum = getRandomcard();
         isAlive = true;
+        hasBlackJack = false;
         firstCard = getRandomcard();
         secondCard = getRandomcard();
         cards = [firstCard, secondCard]
